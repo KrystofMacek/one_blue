@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:one_blue/common/colors.dart';
 import 'dart:math' as math;
 
 import 'package:one_blue/landing_page/providers/animations.dart';
@@ -84,15 +85,16 @@ class ProjectorPad extends ConsumerWidget {
             alignment: Alignment.center,
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.blue[900],
-                      Colors.blue[700],
-                    ],
+                  color: CustomColors.whiteBlue,
+                  border: Border.all(
+                    color: CustomColors.shinyBlue,
                   ),
-                  border: Border.all(color: Colors.grey, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                        color: CustomColors.whiteBlue,
+                        spreadRadius: 2,
+                        blurRadius: 8)
+                  ],
                   shape: BoxShape.circle),
               width: _width * 1.2,
               height: _width * 1.2,
@@ -110,23 +112,37 @@ class ProjectorPad extends ConsumerWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.blue,
+                gradient: RadialGradient(
+                  stops: [.9, 1.2],
+                  colors: [
+                    Colors.blue,
+                    CustomColors.whiteBlue,
+                  ],
+                ),
                 shape: BoxShape.circle,
               ),
               width: _width,
               height: _width,
               child: Transform(
                 origin: Offset(_width / 2, _width / 2),
-                transform: Matrix4.identity()
-                  ..rotateZ((math.pi * 2) * _scannerAnimation),
+                transform: Matrix4.identity(),
+                // ..rotateZ((math.pi * 2) * _scannerAnimation),
                 child: Container(
                   decoration: BoxDecoration(
-                      gradient: SweepGradient(
-                        colors: [
-                          Colors.white.withAlpha(25),
-                          Colors.white.withAlpha(90),
-                        ],
-                      ),
-                      shape: BoxShape.circle),
+                    gradient: RadialGradient(
+                      stops: [
+                        1 * _scannerAnimation,
+                        1.3 * _scannerAnimation,
+                        1.6 * _scannerAnimation,
+                      ],
+                      colors: [
+                        Colors.white.withAlpha(25),
+                        Colors.white.withAlpha(90),
+                        Colors.white.withAlpha(25),
+                      ],
+                    ),
+                    shape: BoxShape.circle,
+                  ),
                   width: _width,
                   height: _width,
                 ),

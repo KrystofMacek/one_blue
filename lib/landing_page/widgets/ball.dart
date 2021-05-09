@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:one_blue/common/colors.dart';
 import 'package:one_blue/landing_page/providers/animations.dart';
 
 class OverlayBall extends ConsumerWidget {
@@ -34,7 +35,7 @@ class OverlayBall extends ConsumerWidget {
               ],
               colors: [
                 Colors.white.withOpacity(0),
-                Colors.white,
+                CustomColors.shinyBlue,
               ],
             ),
             shape: BoxShape.circle,
@@ -70,8 +71,8 @@ class BaseLayerBall extends ConsumerWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.white,
-                blurRadius: 10,
+                color: CustomColors.whiteBlue,
+                blurRadius: 15,
                 spreadRadius: 5,
               )
             ],

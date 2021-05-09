@@ -36,7 +36,7 @@ class ScannerAnimation extends StateNotifier<double> {
   void init(TickerProvider vsync) {
     _animationController = AnimationController(
       vsync: vsync,
-      duration: Duration(seconds: 6),
+      duration: Duration(seconds: 2),
     );
     _animationController.addListener(() {
       state = _animationController.value;
