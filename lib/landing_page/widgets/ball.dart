@@ -30,11 +30,13 @@ class OverlayBall extends ConsumerWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               stops: [
+                -1,
                 .6,
-                10,
+                12,
               ],
               colors: [
-                Colors.white.withOpacity(0),
+                Colors.black26,
+                Colors.white24,
                 CustomColors.shinyBlue,
               ],
             ),

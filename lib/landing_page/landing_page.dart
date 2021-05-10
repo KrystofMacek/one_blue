@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:one_blue/landing_page/providers/animations.dart';
+import 'package:one_blue/landing_page/widgets/background.dart';
 import 'package:one_blue/landing_page/widgets/ball.dart';
+import 'package:one_blue/landing_page/widgets/controlls.dart';
+import 'package:one_blue/landing_page/widgets/halving.dart';
 import 'package:one_blue/landing_page/widgets/projection_effect.dart';
 import 'package:one_blue/landing_page/widgets/projector.dart';
+import 'package:one_blue/landing_page/widgets/stand.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key key}) : super(key: key);
@@ -32,10 +36,14 @@ class _LandingPageState extends State<LandingPage>
       backgroundColor: Colors.grey[850],
       body: Stack(
         children: [
+          Background(size: _size),
+          // Stand(size: _size),
+          // TopSideLine(size: _size),
+          // ProjectorEffect(size: _size),
           ProjectorPad(size: _size),
           BaseLayerBall(size: _size),
           OverlayBall(size: _size),
-          // ProjectorEffect(size: _size),
+          Controlls(size: _size),
         ],
       ),
     );
