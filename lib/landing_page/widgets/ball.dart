@@ -15,8 +15,15 @@ class OverlayBall extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     double _levitationValue = watch(levitationAnimationProvider);
 
-    double _diameter = _size.height * .4;
-
+    double _diameter;
+    if (_size.width > _size.height) {
+      _diameter = _size.width * .2;
+    } else {
+      _diameter = _size.width * .8;
+    }
+    if (_size.width - _size.height < 250) {
+      _diameter = _size.width * .5;
+    }
     return Transform(
       transform: Matrix4.identity()
         ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
@@ -60,8 +67,15 @@ class BaseLayerBall extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     double _levitationValue = watch(levitationAnimationProvider);
-    double _diameter = _size.height * .4;
-
+    double _diameter;
+    if (_size.width > _size.height) {
+      _diameter = _size.width * .2;
+    } else {
+      _diameter = _size.width * .8;
+    }
+    if (_size.width - _size.height < 250) {
+      _diameter = _size.width * .5;
+    }
     return Transform(
       transform: Matrix4.identity()
         ..translate(0, (10 * _levitationValue) - (_size.height * .2)),

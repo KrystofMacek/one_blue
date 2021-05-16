@@ -34,12 +34,12 @@ class Controlls extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.arrow_back_ios,
-                      color: CustomColors.shinyBlue,
+                      color: CustomColors.fullTorq,
                       size: (_size.width * .05 / 3),
                     ),
                     Icon(
                       Icons.arrow_back_ios,
-                      color: CustomColors.shinyBlue,
+                      color: CustomColors.fullTorq,
                       size: (_size.width * .05 / 4),
                     ),
                   ],
@@ -81,12 +81,12 @@ class Controlls extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.arrow_forward_ios,
-                        color: CustomColors.shinyBlue,
+                        color: CustomColors.fullTorq,
                         size: (_size.width * .05 / 4),
                       ),
                       Icon(
                         Icons.arrow_forward_ios,
-                        color: CustomColors.shinyBlue,
+                        color: CustomColors.fullTorq,
                         size: (_size.width * .05 / 3),
                       ),
                     ],

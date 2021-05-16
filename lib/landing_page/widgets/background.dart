@@ -23,9 +23,9 @@ class Background extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff010A1B),
-                Color(0xff0A396A),
-                Color(0xff010A1B),
+                CustomColors.background,
+                CustomColors.backgroundLight,
+                CustomColors.background,
               ],
             ),
           ),

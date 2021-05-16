@@ -4,11 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:one_blue/landing_page/providers/animations.dart';
 import 'package:one_blue/landing_page/widgets/background.dart';
 import 'package:one_blue/landing_page/widgets/ball.dart';
+import 'package:one_blue/landing_page/widgets/button_effect.dart';
 import 'package:one_blue/landing_page/widgets/controlls.dart';
 import 'package:one_blue/landing_page/widgets/halving.dart';
 import 'package:one_blue/landing_page/widgets/projection_effect.dart';
 import 'package:one_blue/landing_page/widgets/projector.dart';
 import 'package:one_blue/landing_page/widgets/stand.dart';
+import 'package:one_blue/landing_page/widgets/headings.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key key}) : super(key: key);
@@ -27,6 +29,12 @@ class _LandingPageState extends State<LandingPage>
 
     context.read(scannerAnimationProvider.notifier).init(this);
     context.read(scannerAnimationProvider.notifier).startAnimtion();
+
+    context.read(buttonEffectAnimationProvider.notifier).init(this);
+    context.read(buttonEffectAnimationProvider.notifier).startAnimtion();
+
+    context.read(contactButtonHoverEffectAnimationProvider.notifier).init(this);
+    context.read(aboutButtonHoverEffectAnimationProvider.notifier).init(this);
   }
 
   @override
@@ -44,6 +52,8 @@ class _LandingPageState extends State<LandingPage>
           BaseLayerBall(size: _size),
           OverlayBall(size: _size),
           Controlls(size: _size),
+          HeadingName(),
+          ButtonCol(size: _size),
         ],
       ),
     );
