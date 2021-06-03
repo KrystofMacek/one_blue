@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: 0.14.0+3
   auto_size_text: ^2.1.0
   dashed_container: ^1.0.1
+  animated_text_kit: ^4.2.1
 
 
 dev_dependencies:
@@ -25,7 +26,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
   fonts:
     - family: Neuropol
       fonts:
         - asset: assets/fonts/neuropol_x_rg.ttf
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/orbitron_m.ttf

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
 import 'package:one_blue/common/colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:one_blue/landing_page/providers/page_view_pager.dart';
 
 class Controlls extends StatelessWidget {
   const Controlls({Key key, Size size})
@@ -29,20 +31,25 @@ class Controlls extends StatelessWidget {
                     ),
                 width: _size.width * .05,
                 height: (_size.width * .05 / 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: CustomColors.fullTorq,
-                      size: (_size.width * .05 / 3),
-                    ),
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: CustomColors.fullTorq,
-                      size: (_size.width * .05 / 4),
-                    ),
-                  ],
+                child: MaterialButton(
+                  onPressed: () {
+                    context.read(pageViewController.notifier).previousPage();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: CustomColors.fullTorq,
+                        size: (_size.width * .05 / 3),
+                      ),
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: CustomColors.fullTorq,
+                        size: (_size.width * .05 / 4),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -75,7 +82,9 @@ class Controlls extends StatelessWidget {
                   minWidth: 0,
                   hoverColor: Colors.transparent,
                   splashColor: CustomColors.whiteBlue,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read(pageViewController.notifier).nextPage();
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -7,6 +7,8 @@ import 'package:one_blue/landing_page/widgets/ball.dart';
 import 'package:one_blue/landing_page/widgets/button_effect.dart';
 import 'package:one_blue/landing_page/widgets/controlls.dart';
 import 'package:one_blue/landing_page/widgets/halving.dart';
+import 'package:one_blue/landing_page/widgets/hud.dart';
+import 'package:one_blue/landing_page/widgets/page_view.dart';
 import 'package:one_blue/landing_page/widgets/projection_effect.dart';
 import 'package:one_blue/landing_page/widgets/projector.dart';
 import 'package:one_blue/landing_page/widgets/stand.dart';
@@ -35,6 +37,9 @@ class _LandingPageState extends State<LandingPage>
 
     context.read(contactButtonHoverEffectAnimationProvider.notifier).init(this);
     context.read(aboutButtonHoverEffectAnimationProvider.notifier).init(this);
+    context.read(hudSlideInAnimationProvider.notifier).init(this);
+    context.read(hudOpenAnimationProvider.notifier).init(this);
+    context.read(portraitOpacityAnimationProvider.notifier).init(this);
   }
 
   @override
@@ -49,11 +54,12 @@ class _LandingPageState extends State<LandingPage>
           // TopSideLine(size: _size),
           // ProjectorEffect(size: _size),
           ProjectorPad(size: _size),
-          BaseLayerBall(size: _size),
-          OverlayBall(size: _size),
+          PageViewContent(size: _size),
           Controlls(size: _size),
           HeadingName(),
           ButtonCol(size: _size),
+          DetailsButtonCol(size: _size),
+          Hud()
         ],
       ),
     );
