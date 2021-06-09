@@ -88,7 +88,6 @@ class _ButtonLeftState extends State<ButtonLeft>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
