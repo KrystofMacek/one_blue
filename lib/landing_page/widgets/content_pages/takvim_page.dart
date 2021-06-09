@@ -5,8 +5,8 @@ import 'package:one_blue/landing_page/providers/content_pager.dart';
 import 'package:one_blue/landing_page/providers/details_pager.dart';
 import 'package:one_blue/landing_page/widgets/ball.dart';
 
-class LandingPage extends ConsumerWidget {
-  const LandingPage({
+class TakvimPage extends ConsumerWidget {
+  const TakvimPage({
     Key key,
     @required Size size,
     @required int position,
@@ -22,8 +22,18 @@ class LandingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    double _diff = _position - _currentPosition;
+    double _levitationValue = watch(levitationAnimationProvider);
+    double _diameter;
+    if (_size.width > _size.height) {
+      _diameter = _size.width * .25;
+    } else {
+      _diameter = _size.width * .75;
+    }
+    if (_size.width - _size.height < 250) {
+      _diameter = _size.width * .5;
+    }
 
+    double _diff = _position - _currentPosition;
     double _opacity = 0;
     double _scale = 1;
 
@@ -44,20 +54,29 @@ class LandingPage extends ConsumerWidget {
 
     _scale.clamp(0.2, 1);
     _opacity.clamp(0, 1);
+
     return Transform(
       origin: Offset(_size.width / 2, _size.height),
       transform: Matrix4.identity()
         ..scale(_scale)
-        ..scale(_scale)
         ..translate(0, _translateY),
       child: Opacity(
         opacity: _opacity,
-        child: Stack(
-          children: [
-            BaseLayerBall(size: _size),
-            OverlayBall(size: _size),
-            // ButtonLayer(size: _size),
-          ],
+        child: Transform(
+          transform: Matrix4.identity()
+            ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
+          child: Align(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/takvim_home.png',
+                  height: _diameter,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

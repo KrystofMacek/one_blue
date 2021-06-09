@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:one_blue/common/colors.dart';
 import 'package:one_blue/landing_page/providers/animations.dart';
+import 'package:one_blue/landing_page/providers/page_view_pager.dart';
 
 class OverlayBall extends ConsumerWidget {
   const OverlayBall({
@@ -107,6 +108,44 @@ class BaseLayerBall extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ButtonLayer extends ConsumerWidget {
+  const ButtonLayer({
+    Key key,
+    Size size,
+  })  : _size = size,
+        super(key: key);
+
+  final Size _size;
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    double _levitationValue = watch(levitationAnimationProvider);
+
+    double _diameter;
+    if (_size.width > _size.height) {
+      _diameter = _size.width * .2;
+    } else {
+      _diameter = _size.width * .8;
+    }
+    if (_size.width - _size.height < 250) {
+      _diameter = _size.width * .5;
+    }
+    return Transform(
+      transform: Matrix4.identity()
+        ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
+      child: Align(
+          alignment: Alignment.center,
+          child: IconButton(
+              icon: Icon(
+                Icons.play_arrow,
+                size: 40,
+                color: CustomColors.fullTorq,
+              ),
+              onPressed: () =>
+                  context.read(pageViewController.notifier).nextPage())),
     );
   }
 }

@@ -6,6 +6,8 @@ import 'package:one_blue/landing_page/providers/page_view_pager.dart';
 import 'package:one_blue/landing_page/widgets/content_pages/landing_page.dart';
 import 'package:one_blue/landing_page/widgets/content_pages/market_wiz.dart';
 import 'package:one_blue/landing_page/widgets/content_pages/mesiji.dart';
+import 'package:one_blue/landing_page/widgets/content_pages/renew_page.dart';
+import 'package:one_blue/landing_page/widgets/content_pages/takvim_page.dart';
 
 class PageViewContent extends StatefulWidget {
   const PageViewContent({Key key, Size size})
@@ -42,34 +44,50 @@ class _PageViewContentState extends State<PageViewContent> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, child) {
-        return PageView(
-          controller: _pageController,
-          scrollDirection: Axis.vertical,
-          onPageChanged: (page) {
-            if (page == 0) {
-              context.read(showDetailsButton.notifier).update(false);
-            } else {
-              context.read(detailsPagerProvider.notifier).updateContentId(page);
-              context.read(showDetailsButton.notifier).update(true);
-            }
-          },
-          children: [
-            LandingPage(
-              size: widget._size,
-              position: 0,
-              currentPosition: currentPageValue,
-            ),
-            MarketWizPage(
-              size: widget._size,
-              position: 1,
-              currentPosition: currentPageValue,
-            ),
-            MesijiPage(
-              size: widget._size,
-              position: 2,
-              currentPosition: currentPageValue,
-            ),
-          ],
+        return Transform(
+          transform: Matrix4.identity()
+            ..translate(0, widget._size.height * .05),
+          child: PageView(
+            controller: _pageController,
+            scrollDirection: Axis.vertical,
+            onPageChanged: (page) {
+              if (page == 0) {
+                context.read(showDetailsButton.notifier).update(false);
+              } else {
+                context
+                    .read(detailsPagerProvider.notifier)
+                    .updateContentId(page);
+                context.read(showDetailsButton.notifier).update(true);
+              }
+            },
+            children: [
+              LandingPage(
+                size: widget._size,
+                position: 0,
+                currentPosition: currentPageValue,
+              ),
+              RenewPage(
+                size: widget._size,
+                position: 1,
+                currentPosition: currentPageValue,
+              ),
+              TakvimPage(
+                size: widget._size,
+                position: 2,
+                currentPosition: currentPageValue,
+              ),
+              MesijiPage(
+                size: widget._size,
+                position: 3,
+                currentPosition: currentPageValue,
+              ),
+              MarketWizPage(
+                size: widget._size,
+                position: 4,
+                currentPosition: currentPageValue,
+              ),
+            ],
+          ),
         );
       },
     );

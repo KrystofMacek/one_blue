@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,10 +40,13 @@ class ContactPageContent extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 10,
+          height: 20,
         ),
         SingleChildScrollView(
           child: Container(child: EmailForm()),
+        ),
+        SizedBox(
+          height: 20,
         ),
       ],
     );
@@ -65,19 +69,16 @@ class _EmailFormState extends State<EmailForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  // Future<void> _send() async {
-  //   context.read(waitingIndicatorProvider).toggle();
-  //   final data = {
-  //     'name': _nameController.text.toString(),
-  //     'email': _emailController.text.toString(),
-  //     'message': '[App] ${_messageController.text.toString()}',
-  //   };
+  Future<void> _send() async {
+    // context.read(waitingIndicatorProvider).toggle();
+    final data = {
+      'name': _nameController.text.toString(),
+      'email': _emailController.text.toString(),
+      'message': '[App] ${_messageController.text.toString()}',
+    };
 
-  //   FirebaseFunctions.instance
-  //       .httpsCallable('sendMail')
-  //       .call(data)
-  //       .then((value) => context.read(waitingIndicatorProvider).toggle());
-  // }
+    FirebaseFunctions.instance.httpsCallable('sendMail').call(data);
+  }
 
   @override
   void initState() {
@@ -104,7 +105,8 @@ class _EmailFormState extends State<EmailForm> {
           child: Column(
             children: [
               TextFormField(
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(
+                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
                 validator: (value) {
                   if (value.isEmpty) {
                     return '';
@@ -118,7 +120,8 @@ class _EmailFormState extends State<EmailForm> {
                 height: 10,
               ),
               TextFormField(
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(
+                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
                 validator: (value) {
                   final String val = value.trim();
                   if (val.isEmpty) {
@@ -137,7 +140,8 @@ class _EmailFormState extends State<EmailForm> {
                 height: 10,
               ),
               TextFormField(
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(
+                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
                 validator: (value) {
                   if (value.isEmpty) {
                     return '';
@@ -153,19 +157,29 @@ class _EmailFormState extends State<EmailForm> {
                 height: 10,
               ),
               MaterialButton(
-                minWidth: double.infinity,
                 elevation: 2,
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                color: CustomColors.fullBlue,
+                color: CustomColors.fullTorq.withOpacity(.5),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    // _send();
+                    _send();
                   }
                 },
                 child: Text(
                   'Send',
-                  style: TextStyle(color: Colors.white, fontSize: 32),
+                  style: TextStyle(
+                    fontFamily: 'Neuropol',
+                    fontSize: 24,
+                    color: Colors.white60,
+                    shadows: [
+                      Shadow(
+                        color: Colors.white,
+                        blurRadius: 2,
+                      )
+                    ],
+                  ),
                 ),
               ),
               // Consumer(
@@ -209,14 +223,16 @@ abstract class CustomDecoration {
   static InputDecoration getInputDecoration(String hint) => InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         hintText: hint,
+        hintStyle:
+            TextStyle(color: Colors.white, fontSize: 22, letterSpacing: 1.6),
         isDense: true,
-        fillColor: Colors.white,
+        fillColor: Colors.white10,
         filled: true,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 1),
+          borderSide: BorderSide(color: Colors.transparent, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColors.fullBlue, width: 1.5),
+          borderSide: BorderSide(color: Colors.white, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red[300], width: 1),

@@ -1,1 +1,6 @@
-const PROJECT_LABELS = ['MarketWiz', 'Mesiji'];
+const PROJECT_LABELS = [
+  'Renew',
+  'Takvim',
+  'Mesiji',
+  'MarketWiz',
+];

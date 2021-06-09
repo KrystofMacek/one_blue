@@ -23,90 +23,140 @@ class Controlls extends StatelessWidget {
             Transform(
               origin: Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
               transform: Matrix4.skewX(-60),
-              child: Container(
-                decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(5),
-                    // border: Border.all(color: Colors.grey[400], width: 2),
-                    // color: Colors.grey[800],
-                    ),
-                width: _size.width * .05,
-                height: (_size.width * .05 / 2),
-                child: MaterialButton(
-                  onPressed: () {
-                    context.read(pageViewController.notifier).previousPage();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: CustomColors.fullTorq,
-                        size: (_size.width * .05 / 3),
-                      ),
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: CustomColors.fullTorq,
-                        size: (_size.width * .05 / 4),
-                      ),
-                    ],
-                  ),
-                ),
+              child: ButtonLeft(
+                size: _size,
+                isForward: false,
               ),
             ),
-            Container(
-              height: 1,
-              width: _size.width * .1,
-              color: CustomColors.whiteBlue,
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: CustomColors.whiteBlue,
+            //     boxShadow: [
+            //       BoxShadow(color: Colors.white, blurRadius: 4, spreadRadius: 1)
+            //     ],
+            //   ),
+            //   height: 1,
+            //   width: _size.width * .1,
+            // ),
             Container(
               width: _size.width * .2,
             ),
-            Container(
-              height: 1,
-              width: _size.width * .1,
-              color: CustomColors.whiteBlue,
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: CustomColors.whiteBlue,
+            //     boxShadow: [
+            //       BoxShadow(color: Colors.white, blurRadius: 4, spreadRadius: 1)
+            //     ],
+            //   ),
+            //   height: 1,
+            //   width: _size.width * .1,
+            // ),
             Transform(
               origin: Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
               transform: Matrix4.skewX(-60),
-              child: Container(
-                decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(5),
-                    // border: Border.all(color: Colors.grey[400], width: 2),
-                    // color: Colors.grey[800],
-                    ),
-                width: _size.width * .05,
-                height: (_size.width * .05 / 2),
-                child: MaterialButton(
-                  elevation: 0,
-                  minWidth: 0,
-                  hoverColor: Colors.transparent,
-                  splashColor: CustomColors.whiteBlue,
-                  onPressed: () {
-                    context.read(pageViewController.notifier).nextPage();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: CustomColors.fullTorq,
-                        size: (_size.width * .05 / 4),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: CustomColors.fullTorq,
-                        size: (_size.width * .05 / 3),
-                      ),
-                    ],
-                  ),
-                ),
+              child: ButtonLeft(
+                size: _size,
+                isForward: true,
               ),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class ButtonLeft extends StatefulWidget {
+  const ButtonLeft({
+    Key key,
+    @required Size size,
+    @required bool isForward,
+  })  : _size = size,
+        _isForward = isForward,
+        super(key: key);
+
+  final Size _size;
+  final bool _isForward;
+
+  @override
+  _ButtonLeftState createState() => _ButtonLeftState();
+}
+
+class _ButtonLeftState extends State<ButtonLeft>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+    _animationController.repeat(reverse: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+        // onEnter: (event) {
+        //   _animationController.repeat(reverse: true);
+        // },
+        // onExit: (event) {
+        //   _animationController.reset();
+        // },
+        child: AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Container(
+          width: widget._size.width * .1,
+          height: (widget._size.width * .1 / 2),
+          child: MaterialButton(
+            onPressed: () {
+              widget._isForward
+                  ? context.read(pageViewController.notifier).nextPage()
+                  : context.read(pageViewController.notifier).previousPage();
+            },
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(
+                        widget._isForward ? 0 : _animationController.value * 5),
+                  child: Icon(
+                    widget._isForward
+                        ? Icons.arrow_forward_ios_rounded
+                        : Icons.arrow_back_ios_rounded,
+                    color: CustomColors.fullTorq,
+                    size: widget._isForward
+                        ? (widget._size.width * .1 / 4)
+                        : (widget._size.width * .1 / 3),
+                  ),
+                ),
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(widget._isForward
+                        ? _animationController.value * -5
+                        : 0),
+                  child: Icon(
+                    widget._isForward
+                        ? Icons.arrow_forward_ios_rounded
+                        : Icons.arrow_back_ios_rounded,
+                    color: CustomColors.fullTorq,
+                    size: widget._isForward
+                        ? (widget._size.width * .1 / 3)
+                        : (widget._size.width * .1 / 4),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ));
   }
 }
 
