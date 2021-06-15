@@ -9,6 +9,7 @@ import 'package:one_blue/common/colors.dart';
 import 'package:one_blue/landing_page/content/hud_contents.dart';
 import 'package:one_blue/landing_page/providers/animations.dart';
 import 'package:one_blue/landing_page/providers/hud_pager.dart';
+import 'dart:html' as html;
 
 class ContactPageContent extends StatelessWidget {
   const ContactPageContent({
@@ -17,6 +18,13 @@ class ContactPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
+    double _titleFS = 40;
+    if (_size.width < 1100) {
+      _titleFS = 30;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,7 +35,7 @@ class ContactPageContent extends StatelessWidget {
               'Contact',
               style: TextStyle(
                 fontFamily: 'Neuropol',
-                fontSize: 40,
+                fontSize: _titleFS,
                 color: Colors.white60,
                 shadows: [
                   Shadow(
@@ -98,6 +106,11 @@ class _EmailFormState extends State<EmailForm> {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+    double _contentFS = 22;
+    if (_size.width < 1100) {
+      _contentFS = 20;
+    }
     return Consumer(
       builder: (context, watch, child) {
         return Form(
@@ -106,7 +119,9 @@ class _EmailFormState extends State<EmailForm> {
             children: [
               TextFormField(
                 style: TextStyle(
-                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
+                    color: Colors.white,
+                    fontSize: _contentFS,
+                    letterSpacing: 1.6),
                 validator: (value) {
                   if (value.isEmpty) {
                     return '';
@@ -121,7 +136,9 @@ class _EmailFormState extends State<EmailForm> {
               ),
               TextFormField(
                 style: TextStyle(
-                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
+                    color: Colors.white,
+                    fontSize: _contentFS,
+                    letterSpacing: 1.6),
                 validator: (value) {
                   final String val = value.trim();
                   if (val.isEmpty) {
@@ -141,7 +158,9 @@ class _EmailFormState extends State<EmailForm> {
               ),
               TextFormField(
                 style: TextStyle(
-                    color: Colors.white, fontSize: 22, letterSpacing: 1.6),
+                    color: Colors.white,
+                    fontSize: _contentFS,
+                    letterSpacing: 1.6),
                 validator: (value) {
                   if (value.isEmpty) {
                     return '';
@@ -171,7 +190,7 @@ class _EmailFormState extends State<EmailForm> {
                   'Send',
                   style: TextStyle(
                     fontFamily: 'Neuropol',
-                    fontSize: 24,
+                    fontSize: _contentFS,
                     color: Colors.white60,
                     shadows: [
                       Shadow(
@@ -182,35 +201,21 @@ class _EmailFormState extends State<EmailForm> {
                   ),
                 ),
               ),
-              // Consumer(
-              //   builder: (context, watch, child) {
-              //     return !watch(waitingIndicatorProvider.state)
-              //         ? ConstrainedBox(
-              //             constraints:
-              //                 BoxConstraints(maxWidth: 150, minHeight: 50),
-              //             child: MaterialButton(
-              //               minWidth: double.infinity,
-              //               elevation: 2,
-              //               shape: RoundedRectangleBorder(
-              //                   borderRadius: BorderRadius.circular(10)),
-              //               color: CustomColors.fullBlue,
-              //               onPressed: () async {
-              //                 if (_formKey.currentState.validate()) {
-              //                   // _send();
-              //                 }
-              //               },
-              //               child: Text(
-              //                 'Send',
-              //                 style:
-              //                     TextStyle(color: Colors.white, fontSize: 32),
-              //               ),
-              //             ),
-              //           )
-              //         : Center(
-              //             child: CircularProgressIndicator(),
-              //           );
-              //   },
-              // ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      html.window.open(
+                          'https://www.upwork.com/freelancers/~01cf85c82de830b317?s=996364627857502209',
+                          'new tab');
+                    },
+                    child: Image.asset(
+                      'assets/logos/upwork.png',
+                      width: _size.width * .1,
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         );

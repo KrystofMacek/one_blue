@@ -15,17 +15,25 @@ import 'package:one_blue/landing_page/widgets/hud_contents/details.dart';
 class Hud extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    Size size = MediaQuery.of(context).size;
+    Size _size = MediaQuery.of(context).size;
 
     double _hudSlideInAnimationValue = watch(hudSlideInAnimationProvider);
     double _hudOpenAnimationValue = watch(hudOpenAnimationProvider);
+
+    double _baseWidth = _size.width * .8;
+    double _baseHeight = _size.height * .9;
+
+    if (_size.width < 1100) {
+      _baseWidth = _size.width * .95;
+      _baseHeight = _size.height * .95;
+    }
 
     return Align(
       alignment: Alignment.center,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: size.width,
-          maxHeight: size.height,
+          maxWidth: _size.width,
+          maxHeight: _size.height,
         ),
         child: Stack(
           children: [
@@ -33,7 +41,7 @@ class Hud extends ConsumerWidget {
               transform: Matrix4.identity()
                 ..translate(
                   0,
-                  -(size.height * .7) * (1 - _hudSlideInAnimationValue),
+                  -(_size.height * .7) * (1 - _hudSlideInAnimationValue),
                 ),
               child: Align(
                 alignment: Alignment.center,
@@ -54,17 +62,17 @@ class Hud extends ConsumerWidget {
                         color: CustomColors.whiteBlue,
                       ),
                       height: 4,
-                      width: size.width * .8 + 2,
+                      width: _baseWidth + 2,
                     ),
                     Container(
-                      width: size.width * .8,
-                      height: (size.height * .9) * _hudOpenAnimationValue,
+                      width: _baseWidth,
+                      height: _baseHeight * _hudOpenAnimationValue,
                       decoration: BoxDecoration(
                         color: Color(0xff015B7E).withOpacity(.95),
                       ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: size.width * .02,
-                          vertical: size.height * .02),
+                          horizontal: _size.width * .02,
+                          vertical: _size.height * .02),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +98,7 @@ class Hud extends ConsumerWidget {
                         color: CustomColors.whiteBlue,
                       ),
                       height: 4,
-                      width: size.width * .8 + 2,
+                      width: _baseWidth + 2,
                     ),
                   ],
                 ),
@@ -110,6 +118,13 @@ class CloseHud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
+    double _iconSize = 40;
+    if (_size.width < 1100) {
+      _iconSize = 28;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.max,
@@ -117,7 +132,7 @@ class CloseHud extends StatelessWidget {
         IconButton(
             icon: Icon(
               Icons.close,
-              size: 40,
+              size: _iconSize,
               color: Colors.white,
             ),
             onPressed: () {

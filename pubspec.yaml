@@ -1,5 +1,5 @@
 name: one_blue
-description: A new Flutter project.
+description: One Blue | Flutter Mobile Development.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -30,6 +30,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/logos/
   fonts:
     - family: Neuropol
       fonts:

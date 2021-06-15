@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:one_blue/common/colors.dart';
+import 'package:one_blue/common/const.dart';
 import 'package:one_blue/landing_page/providers/content_pager.dart';
 
 class TopPagerIndicator extends ConsumerWidget {
@@ -153,6 +155,44 @@ class TopPagerIndicator extends ConsumerWidget {
                         ),
                       );
                     },
+                  ),
+                ),
+                Transform(
+                  transform: Matrix4.identity()..translate(0, 50),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Consumer(
+                      builder: (context, watch, child) {
+                        double _contentPage = watch(currentPage);
+
+                        String label = '';
+                        if (_contentPage >= .5 && _contentPage < 1.5) {
+                          label = PROJECT_LABELS[0];
+                        } else if (_contentPage >= 1.5 && _contentPage < 2.5) {
+                          label = PROJECT_LABELS[1];
+                        } else if (_contentPage >= 2.5 && _contentPage < 3.5) {
+                          label = PROJECT_LABELS[2];
+                        } else if (_contentPage >= 3.5 && _contentPage < 4.5) {
+                          label = PROJECT_LABELS[3];
+                        }
+
+                        return Text(
+                          label,
+                          style: TextStyle(
+                            fontFamily: 'Neuropol',
+                            fontSize: 18,
+                            color: CustomColors.whiteBlue,
+                            shadows: [
+                              Shadow(
+                                color: CustomColors.whiteBlue,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

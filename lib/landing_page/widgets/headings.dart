@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -8,6 +9,18 @@ class HeadingName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
+    double _fontSizeMain;
+    double _fontSizeMinor;
+
+    if (_size.width > _size.height) {
+      _fontSizeMain = 60;
+      _fontSizeMinor = 20;
+    } else {
+      _fontSizeMain = 35;
+      _fontSizeMinor = 18;
+    }
     return Align(
       alignment: Alignment.bottomCenter,
       child: Transform(
@@ -18,9 +31,10 @@ class HeadingName extends StatelessWidget {
             children: [
               Text(
                 'ONE BLUE',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Neuropol',
-                  fontSize: 60,
+                  fontSize: _fontSizeMain,
                   color: Colors.white60,
                   shadows: [
                     Shadow(
@@ -30,19 +44,24 @@ class HeadingName extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                'Flutter | Mobile app development',
-                style: TextStyle(
-                  fontFamily: 'Neuropol',
-                  fontSize: 20,
-                  color: CustomColors.fullTorq,
-                  shadows: [
-                    Shadow(
-                      color: CustomColors.fullTorq.withOpacity(.6),
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    )
-                  ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: AutoSizeText(
+                  'Flutter | Mobile app development',
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Neuropol',
+                    fontSize: _fontSizeMinor,
+                    color: CustomColors.fullTorq,
+                    shadows: [
+                      Shadow(
+                        color: CustomColors.fullTorq.withOpacity(.6),
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

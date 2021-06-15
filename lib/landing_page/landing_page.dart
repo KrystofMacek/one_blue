@@ -6,6 +6,7 @@ import 'package:one_blue/landing_page/widgets/background.dart';
 import 'package:one_blue/landing_page/widgets/button_effect.dart';
 import 'package:one_blue/landing_page/widgets/controlls.dart';
 import 'package:one_blue/landing_page/widgets/hud.dart';
+import 'package:one_blue/landing_page/widgets/mobile_menu.dart';
 import 'package:one_blue/landing_page/widgets/page_view.dart';
 import 'package:one_blue/landing_page/widgets/projector.dart';
 import 'package:one_blue/landing_page/widgets/headings.dart';
@@ -34,9 +35,15 @@ class _LandingPageState extends State<LandingPage>
 
     context.read(contactButtonHoverEffectAnimationProvider.notifier).init(this);
     context.read(aboutButtonHoverEffectAnimationProvider.notifier).init(this);
+
+    context.read(mobileMenuButtonEffectAnimationProvider.notifier).init(this);
+    context.read(mobileMenuButtonEffectAnimationProvider.notifier).resume();
+
     context.read(hudSlideInAnimationProvider.notifier).init(this);
     context.read(hudOpenAnimationProvider.notifier).init(this);
     context.read(portraitOpacityAnimationProvider.notifier).init(this);
+
+    context.read(menuMobileOpenAnimationProvider.notifier).init(this);
   }
 
   @override
@@ -50,14 +57,17 @@ class _LandingPageState extends State<LandingPage>
           // Stand(size: _size),
           // TopSideLine(size: _size),
           // ProjectorEffect(size: _size),
-          TopPagerIndicator(size: _size),
           ProjectorPad(size: _size),
           PageViewContent(size: _size),
           Controlls(size: _size),
           HeadingName(),
           ButtonCol(size: _size),
           DetailsButtonCol(size: _size),
+          MobileMenu(size: _size),
+          Controlls(size: _size),
+          TopPagerIndicator(size: _size),
           Hud(),
+          MobileMenuSheet(size: _size),
         ],
       ),
     );

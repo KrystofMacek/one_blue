@@ -36,6 +36,17 @@ class _DetailsContentsState extends State<DetailsContents> {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
+    double _titleFS = 40;
+    double _contentFS = 24;
+    double _pageviewFS = 18;
+    if (_size.width < 1100) {
+      _titleFS = 30;
+      _contentFS = 18;
+      _pageviewFS = 16;
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +58,7 @@ class _DetailsContentsState extends State<DetailsContents> {
                 PROJECTS[_contentId],
                 style: TextStyle(
                   fontFamily: 'Neuropol',
-                  fontSize: 40,
+                  fontSize: _titleFS,
                   color: Colors.white60,
                   shadows: [
                     Shadow(
@@ -74,7 +85,7 @@ class _DetailsContentsState extends State<DetailsContents> {
                   minFontSize: 18,
                   style: TextStyle(
                     fontFamily: 'Neuropol',
-                    fontSize: 25,
+                    fontSize: _contentFS,
                     color: Colors.white60,
                     shadows: [
                       Shadow(
@@ -95,7 +106,7 @@ class _DetailsContentsState extends State<DetailsContents> {
             style: TextStyle(
               height: 1.6,
               fontFamily: 'Orbitron',
-              fontSize: 24,
+              fontSize: _contentFS,
               color: Colors.white60,
               letterSpacing: 2.5,
               shadows: [
@@ -117,36 +128,10 @@ class _DetailsContentsState extends State<DetailsContents> {
                   controller: _pageController,
                   itemCount: PROJECT_DETAILS[_contentId][0].length,
                   itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(PROJECT_DETAILS[_contentId][0][index]),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * .2),
-                          child: Text(
-                            PROJECT_DETAILS[_contentId][1][index],
-                            softWrap: true,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              height: 1.6,
-                              fontFamily: 'Orbitron',
-                              fontSize: 18,
-                              color: Colors.white60,
-                              letterSpacing: 2,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.white,
-                                  blurRadius: 1,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    return PageViewContent(
+                      contentId: _contentId,
+                      index: index,
+                      pageviewFS: _pageviewFS,
                     );
                   },
                 ),
@@ -186,6 +171,94 @@ class _DetailsContentsState extends State<DetailsContents> {
         ],
       ),
     );
+  }
+}
+
+class PageViewContent extends StatelessWidget {
+  const PageViewContent({
+    Key key,
+    @required int contentId,
+    @required int index,
+    @required double pageviewFS,
+  })  : _contentId = contentId,
+        _index = index,
+        _pageviewFS = pageviewFS,
+        super(key: key);
+
+  final int _contentId;
+  final int _index;
+  final double _pageviewFS;
+
+  @override
+  Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
+    if (_size.width < 900) {
+      return SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              PROJECT_DETAILS[_contentId][0][_index],
+              height: _size.height * .5,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              PROJECT_DETAILS[_contentId][1][_index],
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                height: 1.6,
+                fontFamily: 'Orbitron',
+                fontSize: _pageviewFS,
+                color: Colors.white60,
+                letterSpacing: 2,
+                shadows: [
+                  Shadow(
+                    color: Colors.white,
+                    blurRadius: 1,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(PROJECT_DETAILS[_contentId][0][_index]),
+          SizedBox(
+            width: 20,
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * .2),
+            child: Text(
+              PROJECT_DETAILS[_contentId][1][_index],
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                height: 1.6,
+                fontFamily: 'Orbitron',
+                fontSize: _pageviewFS,
+                color: Colors.white60,
+                letterSpacing: 2,
+                shadows: [
+                  Shadow(
+                    color: Colors.white,
+                    blurRadius: 1,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
 

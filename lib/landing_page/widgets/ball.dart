@@ -16,15 +16,29 @@ class OverlayBall extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     double _levitationValue = watch(levitationAnimationProvider);
 
-    double _diameter;
-    if (_size.width > _size.height) {
-      _diameter = _size.width * .2;
-    } else {
-      _diameter = _size.width * .8;
+    double _diameter = 370;
+    if (_size.width < 1400 && _size.width >= 1100) {
+      _diameter = 300;
+    } else if (_size.width < 1100 && _size.width >= 800) {
+      _diameter = 250;
+    } else if (_size.width < 800 && _size.width >= 500) {
+      _diameter = 210;
+    } else if (_size.width < 500 && _size.width >= 400) {
+      _diameter = 190;
+    } else if (_size.width < 400) {
+      _diameter = 160;
     }
-    if (_size.width - _size.height < 250) {
-      _diameter = _size.width * .5;
-    }
+
+    // double _diameter;
+    // if (_size.width > _size.height) {
+    //   _diameter = _size.width * .2;
+    // } else {
+    //   _diameter = _size.width * .7;
+    // }
+    // if (_size.width - _size.height < 250 && _size.width - _size.height > -250) {
+    //   _diameter = _size.width * .4;
+    // }
+
     return Transform(
       transform: Matrix4.identity()
         ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
@@ -68,15 +82,29 @@ class BaseLayerBall extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     double _levitationValue = watch(levitationAnimationProvider);
-    double _diameter;
-    if (_size.width > _size.height) {
-      _diameter = _size.width * .2;
-    } else {
-      _diameter = _size.width * .8;
+
+    double _diameter = 370;
+    if (_size.width < 1400 && _size.width >= 1100) {
+      _diameter = 300;
+    } else if (_size.width < 1100 && _size.width >= 800) {
+      _diameter = 250;
+    } else if (_size.width < 800 && _size.width >= 500) {
+      _diameter = 210;
+    } else if (_size.width < 500 && _size.width >= 400) {
+      _diameter = 190;
+    } else if (_size.width < 400) {
+      _diameter = 160;
     }
-    if (_size.width - _size.height < 250) {
-      _diameter = _size.width * .5;
-    }
+    // double _diameter;
+    // if (_size.width > _size.height) {
+    //   _diameter = _size.width * .2;
+    // } else {
+    //   _diameter = _size.width * .7;
+    // }
+    // if (_size.width - _size.height < 250 && _size.width - _size.height > -250) {
+    //   _diameter = _size.width * .4;
+    // }
+
     return Transform(
       transform: Matrix4.identity()
         ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
@@ -108,44 +136,6 @@ class BaseLayerBall extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ButtonLayer extends ConsumerWidget {
-  const ButtonLayer({
-    Key key,
-    Size size,
-  })  : _size = size,
-        super(key: key);
-
-  final Size _size;
-  @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    double _levitationValue = watch(levitationAnimationProvider);
-
-    double _diameter;
-    if (_size.width > _size.height) {
-      _diameter = _size.width * .2;
-    } else {
-      _diameter = _size.width * .8;
-    }
-    if (_size.width - _size.height < 250) {
-      _diameter = _size.width * .5;
-    }
-    return Transform(
-      transform: Matrix4.identity()
-        ..translate(0, (10 * _levitationValue) - (_size.height * .2)),
-      child: Align(
-          alignment: Alignment.center,
-          child: IconButton(
-              icon: Icon(
-                Icons.play_arrow,
-                size: 40,
-                color: CustomColors.fullTorq,
-              ),
-              onPressed: () =>
-                  context.read(pageViewController.notifier).nextPage())),
     );
   }
 }

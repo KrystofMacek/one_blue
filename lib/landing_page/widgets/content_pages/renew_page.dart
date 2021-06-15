@@ -23,14 +23,18 @@ class RenewPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     double _levitationValue = watch(levitationAnimationProvider);
-    double _diameter;
-    if (_size.width > _size.height) {
-      _diameter = _size.width * .25;
-    } else {
-      _diameter = _size.width * .75;
-    }
-    if (_size.width - _size.height < 250) {
-      _diameter = _size.width * .5;
+
+    double _diameter = 480;
+    if (_size.width < 1400 && _size.width >= 1100) {
+      _diameter = 440;
+    } else if (_size.width < 1100 && _size.width >= 800) {
+      _diameter = 400;
+    } else if (_size.width < 800 && _size.width >= 500) {
+      _diameter = 340;
+    } else if (_size.width < 500 && _size.width >= 400) {
+      _diameter = 320;
+    } else if (_size.width < 400) {
+      _diameter = 300;
     }
 
     double _diff = _position - _currentPosition;

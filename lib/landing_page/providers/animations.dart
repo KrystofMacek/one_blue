@@ -121,6 +121,32 @@ class AboutButtonHoverEffectAnimation extends StateNotifier<double> {
   void resume() => _animationController.repeat(reverse: true);
 }
 
+final mobileMenuButtonEffectAnimationProvider =
+    StateNotifierProvider<MobileMenuButtonHoverEffectAnimationProvider, double>(
+        (ref) => MobileMenuButtonHoverEffectAnimationProvider());
+
+class MobileMenuButtonHoverEffectAnimationProvider
+    extends StateNotifier<double> {
+  MobileMenuButtonHoverEffectAnimationProvider() : super(0);
+
+  AnimationController _animationController;
+
+  void init(TickerProvider vsync) {
+    _animationController = AnimationController(
+      vsync: vsync,
+      duration: Duration(seconds: 8),
+      reverseDuration: Duration(seconds: 4),
+      animationBehavior: AnimationBehavior.preserve,
+    );
+    _animationController.addListener(() {
+      state = _animationController.value;
+    });
+  }
+
+  void pause() => _animationController.stop();
+  void resume() => _animationController.repeat(reverse: true);
+}
+
 final hudSlideInAnimationProvider =
     StateNotifierProvider<HudSlideInAnimationProvider, double>((ref) =>
         HudSlideInAnimationProvider(
@@ -230,4 +256,32 @@ class PortraitOpacityAnimation extends StateNotifier<double> {
   }
 
   void startAnimtion() => _animationController.forward();
+}
+
+// MOBILE MENU
+
+final menuMobileOpenAnimationProvider =
+    StateNotifierProvider<MenuMobileOpenAnimationProvider, double>(
+        (ref) => MenuMobileOpenAnimationProvider());
+
+class MenuMobileOpenAnimationProvider extends StateNotifier<double> {
+  MenuMobileOpenAnimationProvider() : super(0);
+
+  AnimationController _animationController;
+
+  void init(TickerProvider vsync) {
+    _animationController = AnimationController(
+      vsync: vsync,
+      duration: Duration(milliseconds: 800),
+      reverseDuration: Duration(milliseconds: 800),
+      animationBehavior: AnimationBehavior.preserve,
+    );
+    _animationController.addListener(() {
+      state = _animationController.value;
+    });
+  }
+
+  void play() => _animationController.forward();
+
+  void reverse() => _animationController.reverse();
 }

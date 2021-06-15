@@ -13,53 +13,40 @@ class Controlls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _translateHeight = (_size.height * .26);
+    // if (_size.width < 1400 && _size.width >= 1100) {
+    //   _translateHeight = (_size.height * .23);
+    // }
+
     return Transform(
-      transform: Matrix4.identity()..translate(0, (_size.height * .25)),
+      transform: Matrix4.identity()..translate(0, _translateHeight),
       child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Transform(
-              origin: Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
-              transform: Matrix4.skewX(-60),
-              child: ButtonLeft(
-                size: _size,
-                isForward: false,
+        alignment: Alignment.center,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 650),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Transform(
+                origin:
+                    Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
+                transform: Matrix4.skewX(-60),
+                child: ButtonLeft(
+                  size: _size,
+                  isForward: false,
+                ),
               ),
-            ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: CustomColors.whiteBlue,
-            //     boxShadow: [
-            //       BoxShadow(color: Colors.white, blurRadius: 4, spreadRadius: 1)
-            //     ],
-            //   ),
-            //   height: 1,
-            //   width: _size.width * .1,
-            // ),
-            Container(
-              width: _size.width * .2,
-            ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: CustomColors.whiteBlue,
-            //     boxShadow: [
-            //       BoxShadow(color: Colors.white, blurRadius: 4, spreadRadius: 1)
-            //     ],
-            //   ),
-            //   height: 1,
-            //   width: _size.width * .1,
-            // ),
-            Transform(
-              origin: Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
-              transform: Matrix4.skewX(-60),
-              child: ButtonLeft(
-                size: _size,
-                isForward: true,
+              Transform(
+                origin:
+                    Offset((_size.width * .05 / 2), (_size.width * .05 / 4)),
+                transform: Matrix4.skewX(-60),
+                child: ButtonLeft(
+                  size: _size,
+                  isForward: true,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -96,19 +83,29 @@ class _ButtonLeftState extends State<ButtonLeft>
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-        // onEnter: (event) {
-        //   _animationController.repeat(reverse: true);
-        // },
-        // onExit: (event) {
-        //   _animationController.reset();
-        // },
-        child: AnimatedBuilder(
+    double _width = widget._size.width;
+
+    double _sizeMajor = 60;
+    double _sizeMinor = 40;
+
+    if (_width < 1100 && _width >= 800) {
+      _sizeMajor = 50;
+      _sizeMinor = 35;
+    } else if (_width < 800 && _width >= 500) {
+      _sizeMajor = 40;
+      _sizeMinor = 30;
+    } else if (_width < 500) {
+      _sizeMajor = 30;
+      _sizeMinor = 25;
+    }
+
+    bool isPortrait = (widget._size.width < widget._size.height);
+    bool isTablet = (isPortrait && widget._size.width > 750);
+
+    return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
         return Container(
-          width: widget._size.width * .1,
-          height: (widget._size.width * .1 / 2),
           child: MaterialButton(
             onPressed: () {
               widget._isForward
@@ -130,9 +127,7 @@ class _ButtonLeftState extends State<ButtonLeft>
                         ? Icons.arrow_forward_ios_rounded
                         : Icons.arrow_back_ios_rounded,
                     color: CustomColors.fullTorq,
-                    size: widget._isForward
-                        ? (widget._size.width * .1 / 4)
-                        : (widget._size.width * .1 / 3),
+                    size: widget._isForward ? _sizeMinor : _sizeMajor,
                   ),
                 ),
                 Transform(
@@ -145,9 +140,7 @@ class _ButtonLeftState extends State<ButtonLeft>
                         ? Icons.arrow_forward_ios_rounded
                         : Icons.arrow_back_ios_rounded,
                     color: CustomColors.fullTorq,
-                    size: widget._isForward
-                        ? (widget._size.width * .1 / 3)
-                        : (widget._size.width * .1 / 4),
+                    size: widget._isForward ? _sizeMajor : _sizeMinor,
                   ),
                 ),
               ],
@@ -155,7 +148,7 @@ class _ButtonLeftState extends State<ButtonLeft>
           ),
         );
       },
-    ));
+    );
   }
 }
 

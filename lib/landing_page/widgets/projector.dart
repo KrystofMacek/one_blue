@@ -16,15 +16,34 @@ class ProjectorPad extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    double _width;
-    if (_size.width > _size.height) {
-      _width = _size.width * .1;
-    } else {
-      _width = _size.width * .4;
+    // double _width;
+    // if (_size.width > _size.height) {
+    //   _width = _size.width * .1;
+    // } else {
+    //   _width = _size.width * .4;
+    // }
+    // if (_size.width - _size.height < 250 && _size.width - _size.height > -250) {
+    //   _width = _width = _size.width * .25;
+    // }
+
+    double _width = 250;
+    double _translateHeight = (_size.height * .45);
+    if (_size.width < 1400 && _size.width >= 1100) {
+      _width = 200;
+      _translateHeight = (_size.height * .43);
+    } else if (_size.width < 1100 && _size.width >= 800) {
+      _width = 180;
+      _translateHeight = (_size.height * .46);
+    } else if (_size.width < 800 && _size.width >= 500) {
+      _width = 150;
+    } else if (_size.width < 500 && _size.width >= 400) {
+      _width = 130;
+      _translateHeight = (_size.height * .46);
+    } else if (_size.width < 400) {
+      _width = 100;
+      _translateHeight = (_size.height * .48);
     }
-    if (_size.width - _size.height < 250) {
-      _width = _width = _size.width * .25;
-    }
+
     double _scannerAnimation = watch(scannerAnimationProvider);
     return Stack(
       children: [
@@ -32,7 +51,7 @@ class ProjectorPad extends ConsumerWidget {
           origin: Offset(_width * 1.1 / 2, _width * 1.1 / 2),
           transform: Matrix4.identity()
             ..setEntry(2, 3, 0.001)
-            ..translate(0, (_size.height * .45))
+            ..translate(0, _translateHeight)
             ..rotateX(math.pi / 3),
           child: Align(
             alignment: Alignment.center,
@@ -58,7 +77,7 @@ class ProjectorPad extends ConsumerWidget {
           origin: Offset(_width / 2, _width / 2),
           transform: Matrix4.identity()
             ..setEntry(2, 3, 0.001)
-            ..translate(0, (_size.height * .45))
+            ..translate(0, _translateHeight)
             ..rotateX(math.pi / 3),
           child: Align(
             alignment: Alignment.center,

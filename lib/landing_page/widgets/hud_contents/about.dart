@@ -17,6 +17,20 @@ class AboutPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read(portraitOpacityAnimationProvider.notifier).startAnimtion();
+
+    Size _size = MediaQuery.of(context).size;
+
+    double _titleFS = 40;
+    double _contentFS = 24;
+    double _imageSize = 200;
+    bool _animateText = true;
+    if (_size.width < 1100) {
+      _titleFS = 30;
+      _contentFS = 18;
+      _imageSize = 120;
+      _animateText = false;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,7 +41,7 @@ class AboutPageContent extends StatelessWidget {
               'About',
               style: TextStyle(
                 fontFamily: 'Neuropol',
-                fontSize: 40,
+                fontSize: _titleFS,
                 color: Colors.white60,
                 shadows: [
                   Shadow(
@@ -50,7 +64,7 @@ class AboutPageContent extends StatelessWidget {
                   opacity: .8 * _opacityAnimationValue,
                   child: Image.asset(
                     'assets/images/portrait.png',
-                    height: 200,
+                    height: _imageSize,
                   ),
                 ),
               ],
@@ -60,28 +74,45 @@ class AboutPageContent extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        AnimatedTextKit(
-          isRepeatingAnimation: false,
-          animatedTexts: [
-            TypewriterAnimatedText(
-              ABOUT,
-              textStyle: TextStyle(
-                height: 1.6,
-                fontFamily: 'Orbitron',
-                fontSize: 24,
-                color: Colors.white60,
-                letterSpacing: 2.5,
-                shadows: [
-                  Shadow(
-                    color: Colors.white,
-                    blurRadius: 1,
+        _animateText
+            ? AnimatedTextKit(
+                isRepeatingAnimation: false,
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    ABOUT,
+                    textStyle: TextStyle(
+                      height: 1.6,
+                      fontFamily: 'Orbitron',
+                      fontSize: _contentFS,
+                      color: Colors.white60,
+                      letterSpacing: 2.5,
+                      shadows: [
+                        Shadow(
+                          color: Colors.white,
+                          blurRadius: 1,
+                        )
+                      ],
+                    ),
+                    speed: Duration(milliseconds: 15),
                   )
                 ],
+              )
+            : Text(
+                ABOUT,
+                style: TextStyle(
+                  height: 1.6,
+                  fontFamily: 'Orbitron',
+                  fontSize: _contentFS,
+                  color: Colors.white60,
+                  letterSpacing: 2.5,
+                  shadows: [
+                    Shadow(
+                      color: Colors.white,
+                      blurRadius: 1,
+                    )
+                  ],
+                ),
               ),
-              speed: Duration(milliseconds: 15),
-            )
-          ],
-        ),
       ],
     );
   }
